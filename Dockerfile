@@ -6,7 +6,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 RUN ARCH=$(uname -m) && \
     curl -fsSL "https://github.com/astral-sh/uv/releases/latest/download/uv-${ARCH}-unknown-linux-musl.tar.gz" \
-    | tar xz -C /usr/local/bin && \
+    | tar xz --strip-components=1 -C /usr/local/bin && \
     chmod +x /usr/local/bin/uv /usr/local/bin/uvx
 
 RUN npm install -g @openhands/agent-canvas
