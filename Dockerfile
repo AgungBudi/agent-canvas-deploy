@@ -1,6 +1,6 @@
 FROM node:22-bookworm-slim
 
-# Debian Bookworm ships Python 3.11 (Alpine 3.14 breaks tree-sitter compile)
+# python3-dev + gcc needed to compile tree-sitter C extension at runtime
 RUN apt-get update && apt-get install -y --no-install-recommends \
     curl bash git python3 python3-dev gcc && \
     rm -rf /var/lib/apt/lists/*
