@@ -4,8 +4,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     curl bash git python3 python3-dev gcc && \
     rm -rf /var/lib/apt/lists/*
 
-# Install uv and uvx directly into /usr/local/bin (always on PATH, no symlinks needed)
-RUN curl -LsSf https://astral.sh/uv/install.sh | UV_INSTALL_DIR=/usr/local/bin sh
+# Download uv + uvx directly from GitHub releases into /usr/local/bin.
+# musl-static build — no glibc dependency, works on any Linux.
+RUN ARCH=$(uname -m) && \
+    curl -fsSL "https://github.com/astral-sh/uv/releases/latest/download/uv-${ARCH}-unknown-linux-musl.tar.gz" \
+    | tar xz -C /usr/local/bin && \
+    chmod +x /usr/local/bin/uv /usr/local/bin/uvx
 
 RUN npm install -g @openhands/agent-canvas
 
