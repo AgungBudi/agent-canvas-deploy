@@ -1,7 +1,10 @@
-FROM node:22-alpine
+FROM node:22-bookworm-slim
 
-# python3-dev provides Python.h headers needed to compile tree-sitter
-RUN apk add --no-cache curl bash git python3 python3-dev gcc musl-dev
+# Debian Bookworm ships Python 3.11 (Alpine 3.14 breaks tree-sitter compile)
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    curl bash git python3 python3-dev gcc && \
+    rm -rf /var/lib/apt/lists/*
+
 RUN curl -LsSf https://astral.sh/uv/install.sh | sh
 RUN ln -sf /root/.local/bin/uv /usr/local/bin/uv && \
     ln -sf /root/.local/bin/uvx /usr/local/bin/uvx
