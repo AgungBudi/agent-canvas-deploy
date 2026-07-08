@@ -1,4 +1,3 @@
-```dockerfile
 FROM node:22-alpine
 
 # Install uv (Python runtime required by the agent server)
